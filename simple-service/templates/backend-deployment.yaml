@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.backend.name }}
+  labels:
+    chart: {{ .Values.backend.labels }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.backend.name }}
+  replicas: {{ default 1 .Values.replicaCount | int }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.backend.name }}
+    spec:
+      containers:
+      - name: {{ .Values.backend.name }}
+        image: {{ .Values.image }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.backend.internalPort | int }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.backend.internalPort | int }}
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.backend.internalPort | int }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}

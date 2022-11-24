@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: { { .Values.frontend.name } }
+  labels:
+    chart: { { .Values.frontend.labels } }
+spec:
+  selector:
+    matchLabels:
+      app: { { .Values.frontend.name } }
+  replicas: { { default 1 .Values.replicaCount | int } }
+  template:
+    metadata:
+      labels:
+        app: { { .Values.frontend.name } }
+    spec:
+      containers:
+        - name: { { .Chart.Name } }
+          image: { { .Values.image } }
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: { { .Values.frontend.internalPort | int } }
+          livenessProbe:
+            httpGet:
+              path: /
+              port: { { .Values.frontend.internalPort | int } }
+          readinessProbe:
+            httpGet:
+              path: /
+              port: { { .Values.frontend.internalPort | int } }
