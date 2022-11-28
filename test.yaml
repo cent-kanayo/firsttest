@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: backend
+  name: backend-svc
   labels:
-    name: backend
+    name: backend-svc
 spec:
   containers:
-    - name: backend
+    - name: backend-svc
       image: centkanayo10/backend:1.1.1
       ports:
         - containerPort: 3500
@@ -16,11 +16,11 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    name: backend
+    name: backend-svc
   name: backend-svc
 spec:
   selector:
-    name: backend
+    name: backend-svc
   ports:
     - protocol: TCP
       port: 3500

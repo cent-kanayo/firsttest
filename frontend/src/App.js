@@ -10,7 +10,8 @@ function App() {
     const fetchMessage = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get('http://backend-svc/home');
+        const { data } = await axios.get('http://backend-svc:3500/home');
+        console.log(data);
         setMessage(data);
         setLoading(false);
       } catch (error) {
