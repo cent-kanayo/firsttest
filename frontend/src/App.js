@@ -10,7 +10,7 @@ function App() {
     const fetchMessage = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get('http://backend-svc:3500/home');
+        const { data } = await axios.get('/api/');
         console.log(data);
         setMessage(data);
         setLoading(false);
@@ -32,7 +32,7 @@ function App() {
       </header>
       <div className="grid">
         <h3>The text below is coming from the backend</h3>
-        <h1>{message?.msg}</h1>
+        <h1>{message.message}</h1>
       </div>
     </div>
   );
